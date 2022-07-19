@@ -1,27 +1,28 @@
-import { fetchData } from '../utils/fetchData'
-import { useState } from 'react'
 import {ImSearch} from 'react-icons/im'
+import { useState } from 'react'
+import { fetchData } from '../../utils/fetchData'
 
-export const getStaticProps = async () => {
-  const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false')
-  const data = await response.json()
+export const getServerSideProps = async (context) => {
+    const data = await fetchData('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false')
 
-  return { 
-    props : {
-      coinData : data
+    return {
+        props : {
+            data
+        }
     }
-   }
 }
 
-export default function Home({CoinData}) {
-  const handleSearch =  async () => {
+const SearchCoin = ({data}) => {
+    const handleSearch =  async () => {
         
-  }
-  const [query, setQuery] = useState('')
-  console.log(CoinData)
-  return (
-  <section>
-    <section>
+    }
+
+    console.log(data)
+
+    const [query, setQuery] = useState('')
+
+    return ( 
+        <section>
             <h1  className="text-5xl md:text-7xl my-4 text-center text-yellow font-mono font-bold ">
                 Search coins
             </h1>
@@ -39,9 +40,8 @@ export default function Home({CoinData}) {
                     <ImSearch />
                 </button>
             </form>
-    </section>
-  </section>
-  )
+        </section>
+     );
 }
-
-
+ 
+export default SearchCoin;

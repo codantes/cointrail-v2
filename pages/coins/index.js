@@ -1,8 +1,8 @@
 import Coin from '../../components/search-coins/Coin'
+import { fetchData } from '../../utils/fetchData'
 
 export const getStaticProps = async () => {
-    const response = await fetch('https://api.coingecko.com/api/v3/search/trending')
-    const data = await response.json()
+    const data = await fetchData('https://api.coingecko.com/api/v3/search/trending')
 
     return {
         props : {popCoins: data.coins }
