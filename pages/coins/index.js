@@ -1,6 +1,6 @@
 import Coin from '../../components/search-coins/Coin'
 import { fetchData } from '../../utils/fetchData'
-
+import SearchCoin from '../../components/search-coins/SearchCoin'
 export const getStaticProps = async () => {
     const data = await fetchData('https://api.coingecko.com/api/v3/search/trending')
 
@@ -10,6 +10,7 @@ export const getStaticProps = async () => {
 }
 
 const Coins = ({popCoins}) => {
+    console.log
     return ( 
         <section>
             <h1 className='text-4xl text-center font-mono text-yellow my-4'>
@@ -18,14 +19,20 @@ const Coins = ({popCoins}) => {
             {
                 popCoins.map((coin) => {
                     const key = coin.id
+                    const data = coin.item
                     return(
                         <Coin 
                         key={key}
-                        data={coin}                         
+                        data={data}
+                        name={data.name}
+                        symbol={data.symbol}
+                        id={data.id}
+                        image={data.small}                         
                         />
                     )
                 })
             }
+
         </section>
      );
 }
