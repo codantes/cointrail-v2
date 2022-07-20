@@ -36,8 +36,8 @@ const SearchCoin = ({data}) => {
             setLoading(false)
 
             const searchedCoin = coins.filter( (coin) => 
-            coin.name.toLowerCase().includes(query)
-            ||coin.symbol.toLowerCase().includes(query))
+            coin.name.toLowerCase().includes(query.toLowerCase())
+            ||coin.symbol.toLowerCase().includes(query.toLowerCase()))
             setQuery('')
             setCoinData(searchedCoin)
         }
