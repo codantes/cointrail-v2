@@ -8,26 +8,32 @@ const SearchCoin = ({data}) => {
 
     const [query, setQuery] = useState('')
     const [coinData, setCoinData] = useState([])
+    const [Loading, setLoading] = useState(false)
 
     useEffect(()=>{
         const getCoinData = async () => {
             const coins = await fetchData('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false');
             setCoinData(coins);
           };
-
+        if(!coinData){
+            setLoading(true)
+        }
         getCoinData();
 
-        return () => {
-            // this now gets called when the component unmounts
-          };
+        
+        setLoading(false)
     },[])
 
     const handleSearch = async (e) => {
         e.preventDefault()
         console.log(query)
         if(query){
-            const coins = await fetchData('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10000&page=1&sparkline=false');
+            if(!coins){
+                setLoading(true)
+            }
+            const coins = await fetchData('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=30000&page=1&sparkline=false')
 
+            setLoading(false)
 
             const searchedCoin = coins.filter( (coin) => 
             coin.name.toLowerCase().includes(query)
@@ -39,7 +45,7 @@ const SearchCoin = ({data}) => {
 
     return ( 
         <section>
-            <h1  className="text-5xl md:text-7xl my-4 text-center text-yellow font-mono font-bold ">
+            <h1  className="text-5xl md:text-6xl my-4 text-center text-yellow font-mono font-bold ">
                 Search coins
             </h1>
 
@@ -57,6 +63,9 @@ const SearchCoin = ({data}) => {
                     <ImSearch />
                 </button>
             </form>
+            {Loading &&
+                <h1 className="text-4xl md:text-3xl my-4 text-center text-yellow font-mono font-bold ">Loading...</h1>
+            }
             {
                 coinData.map((coin) => {
                     return (

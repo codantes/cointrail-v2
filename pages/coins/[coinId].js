@@ -41,15 +41,15 @@ const CoinDetatails = (
     news}) => {
     console.log(news)
     return ( 
-        <section>
+        <section className="w-full">
             <article className="font-mono">
                 <section className='my-4 mx-auto p-2 w-4/5 flex items-start justify-center'>
                 <div>
-                    <img className='rounded-full m-3 h-20' src={image} />
+                    <img className='rounded-full m-3 h-16 md:h-20' src={image} />
                 </div>
                 
                 <div>
-                        <h1 className='text-5xl md:text-7xl text-yellow mx-3 my-1 underline'>
+                        <h1 className='text-4xl md:text-7xl text-yellow mx-3 my-1 underline'>
                             {name}
                         </h1>
                         <h2 className='text-3xl md:text-5xl text-yellow mx-3 my-1'>
