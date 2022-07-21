@@ -1,14 +1,14 @@
-import { fetchData } from "../../utils/fetchData";
+import { fetchData, newsOptions, fetchDataWithOptions } from "../../utils/fetchData";
+import NewsCard from "../../components/news/NewsCard";
 
 export const getServerSideProps = async (context) => {
     const id = context.params.coinId;
-    const key = process.env.NEWS_API_KEY
 
     const coinUrl = 'https://api.coingecko.com/api/v3/coins/' +  id  +'?localization=english&tickers=true&market_data=true&developer_data=false'
-    const newsUrl = 'https://newsdata.io/api/1/everything?' + '&q=' + id + '&apiKey=' + key
-    console.log(newsUrl)
+    const newsUrl = 'https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q=' + id + '&pageNumber=1&pageSize=10&autoCorrect=true&safeSearch=true&fromPublishedDate=null&toPublishedDate=null'
+
     const coinData = await fetchData(coinUrl);
-    const newsData = await fetchData(newsUrl)
+    const newsData = await fetchDataWithOptions(newsUrl, newsOptions)
     return {
         props : {
             name : coinData.name,
@@ -23,7 +23,8 @@ export const getServerSideProps = async (context) => {
             price_change_1y : coinData.market_data.price_change_percentage_1y,
             market_cap : coinData.market_data.market_cap.usd,
             market_data : coinData.market_data,
-            news : newsData
+            news : newsData.value,
+            url : newsUrl
         }
     }
 }
@@ -38,7 +39,8 @@ const CoinDetatails = (
     price_change_1w,
     price_change_1m, 
     price_change_1y,
-    news}) => {
+    news,
+    url}) => {
     console.log(news)
     return ( 
         <section className="w-full">
@@ -95,6 +97,22 @@ const CoinDetatails = (
                     <p className='text-xl md:text-2xl text-white leading-9 md:leading-10'>
                         {description}
                     </p>
+                </section>
+                <section className="w-4/5 md:w-3/5 mx-auto my-12 ">
+                    <h1 className='text-3xl md:text-5xl text-center text-yellow mx-3 my-1'>
+                        News Related {name}
+                    </h1>
+                    {
+                        news.map((article) => {
+                            return(
+                                <NewsCard 
+                                key={article.id}
+                                image={article.image.url}
+                                title={article.title}
+                                />
+                            )
+                        })
+                    }
                 </section>
             </article>
         </section>

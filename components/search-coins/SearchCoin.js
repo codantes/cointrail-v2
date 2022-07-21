@@ -45,7 +45,7 @@ const SearchCoin = ({data}) => {
 
     return ( 
         <section>
-            <h1  className="text-5xl md:text-6xl my-4 text-center text-yellow font-mono font-bold ">
+            <h1  className="text-4xl md:text-6xl my-4 text-center text-yellow font-mono font-bold ">
                 Search coins
             </h1>
 
