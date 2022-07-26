@@ -9,7 +9,7 @@ const Coin = ({ image, name, symbol, id }) => {
             </div>
             <Link href={'/coins/' + id}>
                 <div className='cursor-pointer'>
-                    <h1 className='text-3xl text-yellow mx-3 my-1'>
+                    <h1 className='text-3xl text-yellow mx-3 my-1 hover:underline'>
                         {name}
                     </h1>
                     <h2 className='text-xl text-yellow mx-3 my-1'>
