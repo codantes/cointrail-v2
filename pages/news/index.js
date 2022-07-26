@@ -1,6 +1,17 @@
 import { newsOptions, fetchDataWithOptions } from "../../utils/fetchData";
 import NewsCard from "../../components/news/NewsCard";
 
+export const getServerSideProps = async (context) => {
+    const key = process.env.NEWS_API_KEY
+    const newsUrl = 'https://newsapi.org/v2/everything?q=cryptocurrency&pageSize=20&page=1&apiKey=' + key
+
+    const newsData = await fetchDataWithOptions(newsUrl, newsOptions)
+    return{
+        props : {
+            news : newsData.articles
+        }
+    }
+}
 
 const latestNews = ({news}) => {
     console.log(news)
@@ -13,8 +24,9 @@ const latestNews = ({news}) => {
                 news.map((article) => {
                     return(
                         <NewsCard 
-                        key={article.id}
-                        image={article.image.url}
+                        key={article.url}
+                        url={article.url}
+                        image={article.imageTourl}
                         title={article.title}
                         />
                     )
@@ -24,14 +36,5 @@ const latestNews = ({news}) => {
      );
 }
  
-export const getServerSideProps = async (context) => {
-    const newsUrl = 'https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q=crypto&pageNumber=1&pageSize=10&autoCorrect=true&safeSearch=true&fromPublishedDate=null&toPublishedDate=null'
-    const data = await fetchDataWithOptions(newsUrl, newsOptions)
 
-    return{ 
-        props : {
-            news : data.value
-        }
-    }
-}
 export default latestNews;

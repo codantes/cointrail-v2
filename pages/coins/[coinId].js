@@ -3,9 +3,10 @@ import NewsCard from "../../components/news/NewsCard";
 
 export const getServerSideProps = async (context) => {
     const id = context.params.coinId;
+    const key = process.env.NEWS_API_KEY
 
     const coinUrl = 'https://api.coingecko.com/api/v3/coins/' +  id  +'?localization=english&tickers=true&market_data=true&developer_data=false'
-    const newsUrl = 'https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q=' + id + '&pageNumber=1&pageSize=10&autoCorrect=true&safeSearch=true&fromPublishedDate=null&toPublishedDate=null'
+    const newsUrl = 'https://newsapi.org/v2/everything?q=' + id + '&pageSize=20&page=1&apiKey=' + key
 
     const coinData = await fetchData(coinUrl);
     const newsData = await fetchDataWithOptions(newsUrl, newsOptions)
@@ -23,7 +24,7 @@ export const getServerSideProps = async (context) => {
             price_change_1y : coinData.market_data.price_change_percentage_1y,
             market_cap : coinData.market_data.market_cap.usd,
             market_data : coinData.market_data,
-            news : newsData.value,
+            news : newsData.articles,
             url : newsUrl
         }
     }
@@ -41,7 +42,7 @@ const CoinDetatails = (
     price_change_1y,
     news,
     url}) => {
-    console.log(news)
+
     return ( 
         <section className="w-full">
             <article className="font-mono">
@@ -102,16 +103,18 @@ const CoinDetatails = (
                     <h1 className='text-3xl md:text-5xl text-center text-yellow mx-3 my-1'>
                         News Related {name}
                     </h1>
-                    {
+                    { 
                         news.map((article) => {
                             return(
                                 <NewsCard 
-                                key={article.id}
-                                image={article.image.url}
+                                key={article.url}
+                                url={article.url}
+                                image={article.urlToImage}
                                 title={article.title}
                                 />
                             )
                         })
+                        
                     }
                 </section>
             </article>
