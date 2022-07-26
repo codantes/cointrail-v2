@@ -103,7 +103,7 @@ const CoinDetatails = (
                     <h1 className='text-3xl md:text-5xl text-center text-yellow mx-3 my-1'>
                         News Related {name}
                     </h1>
-                    { 
+                    { /*
                         news.map((article) => {
                             return(
                                 <NewsCard 
@@ -114,7 +114,7 @@ const CoinDetatails = (
                                 />
                             )
                         })
-                        
+                        */
                     }
                 </section>
             </article>
