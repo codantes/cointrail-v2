@@ -7,9 +7,9 @@ export const getServerSideProps = async (context) => {
 
     const coinUrl = 'https://api.coingecko.com/api/v3/coins/' +  id  +'?localization=english&tickers=true&market_data=true&developer_data=false'
     const newsUrl = 'https://newsapi.org/v2/everything?q=' + id + '&pageSize=20&page=1&apiKey=' + key
-
+    
     const coinData = await fetchData(coinUrl);
-    const newsData = await fetchDataWithOptions(newsUrl, newsOptions)
+    const newsData = await fetchData(newsUrl)
     return {
         props : {
             name : coinData.name,
@@ -103,7 +103,7 @@ const CoinDetatails = (
                     <h1 className='text-3xl md:text-5xl text-center text-yellow mx-3 my-1'>
                         News Related {name}
                     </h1>
-                    { /*
+                    { 
                         news.map((article) => {
                             return(
                                 <NewsCard 
@@ -114,7 +114,7 @@ const CoinDetatails = (
                                 />
                             )
                         })
-                        */
+                        
                     }
                 </section>
             </article>
