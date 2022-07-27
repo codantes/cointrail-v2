@@ -75,6 +75,7 @@ const SearchCoin = ({data}) => {
                         name={coin.name}
                         symbol={coin.symbol}
                         id={coin.id}
+                        price_change={coin.price_change_percentage_24h}
                         />
                     )
                 })
