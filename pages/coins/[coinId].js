@@ -6,10 +6,8 @@ export const getServerSideProps = async (context) => {
     const key = process.env.NEWS_API_KEY
 
     const coinUrl = 'https://api.coingecko.com/api/v3/coins/' +  id  +'?localization=english&tickers=true&market_data=true&developer_data=false'
-    const newsUrl = 'https://newsapi.org/v2/everything?q=' + id + '&pageSize=20&page=1&apiKey=' + key
     
     const coinData = await fetchData(coinUrl);
-    const newsData = await fetchData(newsUrl)
     return {
         props : {
             name : coinData.name,
@@ -24,8 +22,6 @@ export const getServerSideProps = async (context) => {
             price_change_1y : coinData.market_data.price_change_percentage_1y,
             market_cap : coinData.market_data.market_cap.usd,
             market_data : coinData.market_data,
-            news : newsData.articles,
-            url : newsUrl
         }
     }
 }
@@ -99,24 +95,7 @@ const CoinDetatails = (
                         {description}
                     </p>
                 </section>
-                <section className="w-4/5 md:w-3/5 mx-auto my-12 ">
-                    <h1 className='text-3xl md:text-5xl text-center text-yellow mx-3 my-1'>
-                        News Related {name}
-                    </h1>
-                    { 
-                        news.map((article) => {
-                            return(
-                                <NewsCard 
-                                key={article.url}
-                                url={article.url}
-                                image={article.urlToImage}
-                                title={article.title}
-                                />
-                            )
-                        })
-                        
-                    }
-                </section>
+                
             </article>
         </section>
      );

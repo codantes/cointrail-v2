@@ -9,7 +9,7 @@ const SearchCoin = ({data}) => {
     const [query, setQuery] = useState('')
     const [coinData, setCoinData] = useState([])
     const [Loading, setLoading] = useState(false)
-
+    console.log(coinData)
     useEffect(()=>{
         const getCoinData = async () => {
             const coins = await fetchData('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false');
